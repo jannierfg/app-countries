@@ -1,0 +1,15 @@
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: 600;
+
+    padding: 20px;
+    width: 100%;
+}
+
+#map {
+    width: 100%;
+    height: 400px;
+}

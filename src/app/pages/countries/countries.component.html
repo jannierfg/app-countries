@@ -1,0 +1,76 @@
+<div class="container">
+  <div class="title">Paises del Mundo</div>
+
+  <!-- Search filter countries -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <!-- <label for="email">Email address:</label> -->
+        <input
+          type="email"
+          class="form-control"
+          placeholder="Buscar"
+          name="filterCountry"
+          [(ngModel)]="filterCountry"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- List of countries-->
+  <div class="row">
+    <div
+      class="col-md-4"
+      *ngFor="
+        let country of countries
+          | filter: filterCountry
+          | paginate: { itemsPerPage: 3, currentPage: page }
+      "
+    >
+      <div class="card">
+        <img
+          [src]="country.flags.svg"
+          class="card-img-top"
+          width="150px"
+          height="150px"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ country.name }}</h5>
+          <p class="card-text">
+            {{ country.capital }}
+          </p>
+          <strong>Idiomas:</strong>
+          <span *ngFor="let language of country.languages; last as isLast">
+            {{ language.name }}<span *ngIf="!isLast">,</span
+            ><span *ngIf="isLast">.</span>
+          </span>
+          <br />
+          <strong>Moneda:</strong>
+          <span *ngFor="let currency of country.currencies; last as isLast">
+            {{ currency.name }}<span *ngIf="!isLast">,</span>
+            <span *ngIf="isLast">.</span>
+          </span>
+          <br />
+          <a [routerLink]="['/', country.alpha2Code]" class="btn btn-primary"
+            >Go somewhere</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagination">
+    <pagination-controls
+      (pageChange)="page = $event"
+      previousLabel="Previous"
+      nextLabel="Next"
+    >
+    </pagination-controls>
+  </div>
+</div>
+
+<div class="loading" [hidden]="!loading">
+  <div class="spinner-grow text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
